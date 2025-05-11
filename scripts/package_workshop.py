@@ -2,14 +2,16 @@
 import sys
 import os
 
-def create_main_folder(widgets, clear_output, display):
-    def check(pathway):
-        if not os.path.exists(pathway):
-            os.makedirs(pathway, exist_ok=True)
-            print(f"De map '{pathway}' is aangemaakt.")
-        else:
-            print(f"De map '{pathway}' bestaat al.")
 
+def check(pathway):
+    if not os.path.exists(pathway):
+        os.makedirs(pathway, exist_ok=True)
+        print(f"De map '{pathway}' is aangemaakt.")
+    else:
+        print(f"De map '{pathway}' bestaat al.")
+
+
+def create_main_folder(widgets, clear_output, display):
     root_folder = "drive/MyDrive/Wetsus_data_analysis"
     check(root_folder)
 
@@ -42,3 +44,19 @@ def create_main_folder(widgets, clear_output, display):
     # Use the selector
     dropdown_widget, text_box_widget = folder_selector(root_folder, widgets, clear_output, display)
     return dropdown_widget, text_box_widget
+
+
+def chosen_folder(dropdown_widget, text_box_widget):
+    if dropdown_widget.value == "Choose":
+        sys.exit(print("Please choose a folder"))
+
+    if dropdown_widget.value == "new_project":
+        if text_box_widget.value != "":
+            chosen_item = text_box_widget.value
+        else:
+            chosen_item = "new_project"
+    else:
+        chosen_item = dropdown_widget.value
+    # Stuff for multiple places
+    folder_path = f"drive/MyDrive/Wetsus_data_analysis/{chosen_item}/qiime_analysis"
+    return folder_path
