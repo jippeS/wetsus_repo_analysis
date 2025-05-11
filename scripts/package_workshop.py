@@ -59,6 +59,7 @@ def chosen_folder(dropdown_widget, text_box_widget):
         chosen_item = dropdown_widget.value
     # Stuff for multiple places
     folder_path = f"drive/MyDrive/Wetsus_data_analysis/{chosen_item}/qiime_analysis"
+    check(folder_path)
     return folder_path
 
 
