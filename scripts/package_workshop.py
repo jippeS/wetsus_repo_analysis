@@ -140,12 +140,12 @@ def return_primers():
         "1193R": "ACGTCATCCCCACCTTCC",
         "1387R": "GGGCGGWGTGTACAAGGC"}
 
-    return forward_primers, reverse_primers
+    return [forward_primers, reverse_primers]
 
 
-def create_first_dropdown_primers(forward_primer, reverse_primers, widgets):
-    # forward_primers = primers[0]
-    # reverse_primers = primers[1]
+def create_first_dropdown_primers(primers, widgets):
+    forward_primers = primers[0]
+    reverse_primers = primers[1]
     def create_dropdown_with_new_project(dictionary, label):
         options = list(dictionary.keys())
         options.insert(0, "new_project")
