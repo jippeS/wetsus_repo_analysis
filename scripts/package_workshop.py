@@ -111,3 +111,117 @@ def create_names(input_box):
     print(name_convention_PairEndSequences)
 
     return name_convention, metadata, name_convention_PairEndSequences
+
+def return_primers():
+    """
+    # https://lutzonilab.org/16s-ribosomal-dna/ : 27F, 8F, , 515F, 1492R
+    # https://earthmicrobiome.org/protocols-and-standards/16s/ : 515F-Y, 806R
+    # https://www.researchgate.net/publication/382628589_The_formation_of_sulfur_metabolites_during_in_vitro_gastrointestinal_digestion_of_fish_white_and_red_meat_is_affected_by_the_addition_of_fructo-oligosaccharides/fulltext/66a63fc375fcd863e5e28168/The-formation-of-sulfur-metabolites-during-in-vitro-gastrointestinal-digestion-of-fish-white-and-red-meat-is-affected-by-the-addition-of-fructo-oligosaccharides.pdf : 341F
+    # https://pmc.ncbi.nlm.nih.gov/articles/PMC4865482/ : 799F, 1193R
+    # https://pmc.ncbi.nlm.nih.gov/articles/PMC4040986/ : 926F
+    # https://www.researchgate.net/publication/315754509_Comparative_Evaluation_of_Four_Bacteria-Specific_Primer_Pairs_for_16S_rRNA_Gene_Surveys : 785R
+    # https://pmc.ncbi.nlm.nih.gov/articles/PMC4228914/ : 1387R
+    :return:
+    """
+    forward_primers = {
+        "27F": "AGAGTTTGATCMTGGCTCAG",
+        "8F": "AGAGTTTGATCCTGGCTCAG",
+        "341F": "CCTACGGGNGGCWGCAG",
+        "515F": "GTGCCAGCMGCCGCGGTAA",
+        "515F-Y": "GTGYCAGCMGCCGCGGTAA",
+        "799F": "AACMGGATTAGATACCCKG",
+        "926F": "AAACTYAAAKGAATTGRCGG"}
+
+    reverse_primers = {
+        "1492R": "GGTTACCTTGTTACGACTT",
+        "785R": "GACTACHVGGGTATCTAATCC",
+        "806R": "GGACTACHVGGGTWTCTAAT",
+        "926R": "CCGYCAATTYMTTTRAGTTT",
+        "1193R": "ACGTCATCCCCACCTTCC",
+        "1387R": "GGGCGGWGTGTACAAGGC"}
+
+    return [forward_primers, reverse_primers]
+
+
+def create_first_dropdown_primers(primers, widgets):
+    forward_primers = primers[0]
+    reverse_primers = primers[1]
+    def create_dropdown_with_new_project(dictionary, label):
+        options = list(dictionary.keys())
+        options.insert(0, "new_project")
+        options.insert(0, "Choose")
+        return widgets.Dropdown(options=options, description=label)
+
+    def create_name_and_sequence_inputs(label_prefix):
+        name_input = widgets.Text(
+            placeholder='Primer name',
+            description=f'{label_prefix} Name:',
+            layout=widgets.Layout(width='50%')
+        )
+        sequence_input = widgets.Text(
+            placeholder='Primer sequence',
+            description=f'{label_prefix} Seq:',
+            layout=widgets.Layout(width='50%')
+        )
+        return name_input, sequence_input
+
+    # Widgets for forward primers
+    dic_1["forward_dropdown"] = create_dropdown_with_new_project(forward_primers, "Forward:")
+    dic_1["forward_name_input"], dic_1["forward_seq_input"] = create_name_and_sequence_inputs("Forward")
+
+    # Widgets for reverse primers
+    dic_1["reverse_dropdown"] = create_dropdown_with_new_project(reverse_primers, "Reverse:")
+    dic_1["reverse_name_input"], dic_1["reverse_seq_input"] = create_name_and_sequence_inputs("Reverse")
+
+    # Output areas for conditional input
+    dic_1["forward_output"] = widgets.Output()
+    dic_1["reverse_output"] = widgets.Output()
+
+    return dic_1
+
+def primer_dropdown(dic_1, display, clear_output):
+    forward_output = dic_1["forward_output"]
+    forward_name_input = dic_1["forward_name_input"]
+    forward_seq_input = dic_1["forward_seq_input"]
+    forward_dropdown = dic_1["forward_dropdown"]
+
+    reverse_output = dic_1["reverse_output"]
+    reverse_name_input = dic_1["reverse_name_input"]
+    reverse_seq_input = dic_1["reverse_seq_input"]
+    reverse_dropdown = dic_1["reverse_dropdown"]
+
+    def on_forward_change(change):
+        with forward_output:
+            clear_output()
+            if change["new"] == "new_primer":
+                display(forward_name_input, forward_seq_input)
+
+    def on_reverse_change(change):
+        with reverse_output:
+            clear_output()
+            if change["new"] == "new_primer":
+                display(reverse_name_input, reverse_seq_input)
+
+    # Attach observers
+    forward_dropdown.observe(on_forward_change, names='value')
+    reverse_dropdown.observe(on_reverse_change, names='value')
+
+    # Display all widgets
+    display(forward_dropdown, forward_output)
+    display(reverse_dropdown, reverse_output)
+
+    dic_primer_output = {"forward_dropdown": forward_dropdown, "forward_name_input": forward_name_input,
+                         "forward_seq_input": forward_seq_input, "reverse_dropdown": reverse_dropdown,
+                         "reverse_name_input": reverse_name_input, "reverse_seq_input": reverse_seq_input}
+
+    return dic_primer_output
+
+def check_string(String_value, input_name, input_seq):
+  if String_value == "Choose":
+    sys.exit(print("Please choose a primer"))
+
+  if String_value == "new_primer":
+    if input_name.value == "":
+      sys.exit(print("Please enter a name"))
+    if input_seq.value == "":
+      sys.exit(print("Please enter a sequence"))
