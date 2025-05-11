@@ -100,5 +100,14 @@ def naming_convention(folder_path, widgets):
     # Display it nicely at the top
     display(input_box, output_box)
 
-
     return input_box, cores, outputdir, folder_name
+
+def create_names(input_box):
+    name_convention = input_box.value
+    metadata = name_convention + "@metadata.txt"
+    name_convention_PairEndSequences = name_convention + "_PairEndSequences.qza"
+
+    print(input_box.value)
+    print(name_convention_PairEndSequences)
+
+    return name_convention, metadata, name_convention_PairEndSequences
