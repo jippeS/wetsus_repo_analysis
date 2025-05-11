@@ -60,3 +60,10 @@ def chosen_folder(dropdown_widget, text_box_widget):
     # Stuff for multiple places
     folder_path = f"drive/MyDrive/Wetsus_data_analysis/{chosen_item}/qiime_analysis"
     return folder_path
+
+
+def upload_files(files, shutil):
+    uploaded = files.upload()  # User selects a file to upload
+    filename = list(uploaded.keys())[0]
+    shutil.move(filename, os.path.join(folder_path, filename))
+    print(f"File '{filename}' has been moved to '{folder_path}'")
