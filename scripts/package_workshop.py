@@ -67,3 +67,38 @@ def upload_files(files, shutil, folder_path):
     filename = list(uploaded.keys())[0]
     shutil.move(filename, os.path.join(folder_path, filename))
     print(f"File '{filename}' has been moved to '{folder_path}'")
+
+def naming_convention(folder_path, widgets):
+    folder_path2 = folder_path + "/"
+    directory_names = [name for name in os.listdir(folder_path2) if os.path.isdir(os.path.join(folder_path2, name))]
+    folder_name = ""
+    for directory_name in directory_names:
+        folder_name = directory_name
+    folder_name = f"{folder_name}"[0:-1]
+    outputdir = folder_path + "/output"
+    cores = 2
+
+    # Create an "input bar" at the top
+    input_box = widgets.Text(
+        value='',
+        placeholder='Enter a name for the output files...',
+        description='Name:',
+        layout=widgets.Layout(width='50%')
+    )
+
+    output_box = widgets.Output()
+
+    def handle_submit(sender):
+        with output_box:
+            output_box.clear_output()
+            print(f"You entered: {sender.value}")
+            # Add your logic here for processing the input
+            # For example, sending commands to a Minecraft server
+
+    input_box.on_submit(handle_submit)
+
+    # Display it nicely at the top
+    display(input_box, output_box)
+
+
+    return input_box, cores, outputdir, folder_name
