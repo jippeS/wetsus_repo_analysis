@@ -2,7 +2,7 @@
 import sys
 import os
 
-def create_main_folder(widgets):
+def create_main_folder(widgets, clear_output, display):
     def check(pathway):
         if not os.path.exists(pathway):
             os.makedirs(pathway, exist_ok=True)
@@ -14,7 +14,7 @@ def create_main_folder(widgets):
     check(root_folder)
 
     # Create dropdown + dynamic text input
-    def folder_selector(base_dir, widgets):
+    def folder_selector(base_dir, widgets, clear_output, display):
         folders = [f for f in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, f)) and not f.startswith(".ipynb")]
         folders.insert(0, "new_project")
         folders.insert(0, "Choose")
