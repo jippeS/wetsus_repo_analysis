@@ -62,7 +62,7 @@ def chosen_folder(dropdown_widget, text_box_widget):
     return folder_path
 
 
-def upload_files(files, shutil):
+def upload_files(files, shutil, folder_path):
     uploaded = files.upload()  # User selects a file to upload
     filename = list(uploaded.keys())[0]
     shutil.move(filename, os.path.join(folder_path, filename))
