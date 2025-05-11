@@ -40,5 +40,5 @@ def create_main_folder(widgets, clear_output, display):
         return dropdown, text_box
 
     # Use the selector
-    dropdown_widget, text_box_widget = folder_selector(root_folder, widgets)
+    dropdown_widget, text_box_widget = folder_selector(root_folder, widgets, clear_output, display)
     return dropdown_widget, text_box_widget
