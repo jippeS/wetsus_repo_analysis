@@ -140,12 +140,12 @@ def return_primers():
         "1193R": "ACGTCATCCCCACCTTCC",
         "1387R": "GGGCGGWGTGTACAAGGC"}
 
-    return [forward_primers, reverse_primers]
+    return forward_primers, reverse_primers
 
 
-def create_first_dropdown_primers(primers, widgets):
-    forward_primers = primers[0]
-    reverse_primers = primers[1]
+def create_first_dropdown_primers(forward_primer, reverse_primers, widgets):
+    # forward_primers = primers[0]
+    # reverse_primers = primers[1]
     def create_dropdown_with_new_project(dictionary, label):
         options = list(dictionary.keys())
         options.insert(0, "new_project")
@@ -165,17 +165,18 @@ def create_first_dropdown_primers(primers, widgets):
         )
         return name_input, sequence_input
 
+    dic_1 = {"forward_dropdown": create_dropdown_with_new_project(forward_primers, "Forward:"),
+             "forward_name_input": (create_name_and_sequence_inputs("Forward"))[0],
+             "forward_seq_input": (create_name_and_sequence_inputs("Forward"))[1],
+             "reverse_dropdown": create_dropdown_with_new_project(reverse_primers, "Reverse:"),
+             "reverse_name_input": (create_name_and_sequence_inputs("Reverse"))[0],
+             "reverse_seq_input": (create_name_and_sequence_inputs("Reverse"))[1], "forward_output": widgets.Output(),
+             "reverse_output": widgets.Output()}
     # Widgets for forward primers
-    dic_1["forward_dropdown"] = create_dropdown_with_new_project(forward_primers, "Forward:")
-    dic_1["forward_name_input"], dic_1["forward_seq_input"] = create_name_and_sequence_inputs("Forward")
 
     # Widgets for reverse primers
-    dic_1["reverse_dropdown"] = create_dropdown_with_new_project(reverse_primers, "Reverse:")
-    dic_1["reverse_name_input"], dic_1["reverse_seq_input"] = create_name_and_sequence_inputs("Reverse")
 
     # Output areas for conditional input
-    dic_1["forward_output"] = widgets.Output()
-    dic_1["reverse_output"] = widgets.Output()
 
     return dic_1
 
