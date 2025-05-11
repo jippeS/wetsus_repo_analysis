@@ -2,7 +2,7 @@
 import sys
 import os
 
-def create_main_folder():
+def create_main_folder(widgets):
     def check(pathway):
         if not os.path.exists(pathway):
             os.makedirs(pathway, exist_ok=True)
