@@ -140,12 +140,11 @@ def return_primers():
         "1193R": "ACGTCATCCCCACCTTCC",
         "1387R": "GGGCGGWGTGTACAAGGC"}
 
-    return [forward_primers, reverse_primers]
+    return forward_primers, reverse_primers
 
 
-def create_first_dropdown_primers(primers, widgets):
-    forward_primers = primers[0]
-    reverse_primers = primers[1]
+def create_first_dropdown_primers(widgets):
+    forward_primers, reverse_primers = return_primers()
     def create_dropdown_with_new_project(dictionary, label):
         options = list(dictionary.keys())
         options.insert(0, "new_project")
@@ -226,3 +225,39 @@ def check_string(String_value, input_name, input_seq):
       sys.exit(print("Please enter a name"))
     if input_seq.value == "":
       sys.exit(print("Please enter a sequence"))
+
+def finalize_primers(dic_primer_output):
+
+    forward_primers, reverse_primers = return_primers()
+
+    forward_dropdown = dic_primer_output["forward_dropdown"]
+    forward_name_input = dic_primer_output["forward_name_input"]
+    forward_seq_input = dic_primer_output["forward_seq_input"]
+    reverse_dropdown = dic_primer_output["reverse_dropdown"]
+    reverse_name_input = dic_primer_output["reverse_name_input"]
+    reverse_seq_input = dic_primer_output["reverse_seq_input"]
+
+    check_string(forward_dropdown.value, forward_name_input, forward_seq_input)
+    check_string(reverse_dropdown.value, reverse_name_input, reverse_seq_input)
+
+    if forward_dropdown.value == "Choose" or reverse_dropdown.value == "Choose" or forward_seq_input == None or forward_name_input == None:
+        sys.exit(print("Please choose a primer"))
+
+    if forward_dropdown.value == "new_primer":
+        forward_primer = forward_name_input.value
+        forward_primer_seq = forward_seq_input.value.upper()
+    else:
+        forward_primer = forward_dropdown.value
+        forward_primer_seq = forward_primers[forward_dropdown.value]
+
+    if reverse_dropdown.value == "new_primer":
+        reverse_primer = reverse_name_input.value
+        reverse_primer_seq = reverse_seq_input.value.upper()
+    else:
+        reverse_primer = reverse_dropdown.value
+        reverse_primer_seq = reverse_primers[reverse_dropdown.value]
+
+    print(f"Chosen forward primer: {forward_primer}: {forward_primer_seq}")
+    print(f"Chosen reverse primer: {reverse_primer}: {reverse_primer_seq}")
+
+    return forward_primer_seq, reverse_primer_seq
