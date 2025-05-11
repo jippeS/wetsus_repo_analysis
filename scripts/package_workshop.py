@@ -14,7 +14,7 @@ def create_main_folder(widgets):
     check(root_folder)
 
     # Create dropdown + dynamic text input
-    def folder_selector(base_dir):
+    def folder_selector(base_dir, widgets):
         folders = [f for f in os.listdir(base_dir) if os.path.isdir(os.path.join(base_dir, f)) and not f.startswith(".ipynb")]
         folders.insert(0, "new_project")
         folders.insert(0, "Choose")
@@ -40,5 +40,5 @@ def create_main_folder(widgets):
         return dropdown, text_box
 
     # Use the selector
-    dropdown_widget, text_box_widget = folder_selector(root_folder)
+    dropdown_widget, text_box_widget = folder_selector(root_folder, widgets)
     return dropdown_widget, text_box_widget
