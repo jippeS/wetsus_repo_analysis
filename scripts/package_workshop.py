@@ -70,12 +70,6 @@ def upload_files(files, shutil, folder_path):
     print(f"File '{filename}' has been moved to '{folder_path}'")
 
 def naming_convention(folder_path, widgets):
-    folder_path2 = folder_path + "/"
-    directory_names = [name for name in os.listdir(folder_path2) if os.path.isdir(os.path.join(folder_path2, name))]
-    folder_name = ""
-    for directory_name in directory_names:
-        folder_name = directory_name
-    folder_name = f"{folder_name}"[0:-1]
     outputdir = folder_path + "/output"
     cores = 2
 
@@ -101,7 +95,7 @@ def naming_convention(folder_path, widgets):
     # Display it nicely at the top
     display(input_box, output_box)
 
-    return input_box, cores, outputdir, folder_name
+    return input_box, cores, outputdir
 
 def create_names(input_box):
     name_convention = input_box.value
@@ -192,15 +186,15 @@ def primer_dropdown(dic_1, display, clear_output):
     reverse_dropdown = dic_1["reverse_dropdown"]
 
     def on_forward_change(change):
-        with forward_output:
-            clear_output()
-            if change["new"] == "new_primer":
+        forward_output.clear_output()
+        if change["new"] == "new_primer":
+            with forward_output:
                 display(forward_name_input, forward_seq_input)
 
     def on_reverse_change(change):
-        with reverse_output:
-            clear_output()
-            if change["new"] == "new_primer":
+        reverse_output.clear_output()
+        if change["new"] == "new_primer":
+            with reverse_output:
                 display(reverse_name_input, reverse_seq_input)
 
     # Attach observers
