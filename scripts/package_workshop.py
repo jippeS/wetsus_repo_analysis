@@ -142,7 +142,7 @@ def create_first_dropdown_primers(widgets):
     forward_primers, reverse_primers = return_primers()
     def create_dropdown_with_new_project(dictionary, label):
         options = list(dictionary.keys())
-        options.insert(0, "new_project")
+        options.insert(0, "new_primer")
         options.insert(0, "Choose")
         return widgets.Dropdown(options=options, description=label)
 
@@ -186,16 +186,16 @@ def primer_dropdown(dic_1, display, clear_output):
     reverse_dropdown = dic_1["reverse_dropdown"]
 
     def on_forward_change(change):
-        if change["new"] == "new_primer":
-            with forward_output:
-                clear_output()
-            display(forward_name_input, forward_seq_input)
+        with forward_output:
+            clear_output()
+            if change["new"] == "new_primer":
+                display(forward_name_input, forward_seq_input)
 
     def on_reverse_change(change):
-        if change["new"] == "new_primer":
-            with reverse_output:
-                clear_output()
-            display(reverse_name_input, reverse_seq_input)
+        with reverse_output:
+            clear_output()
+            if change["new"] == "new_primer":
+                display(reverse_name_input, reverse_seq_input)
 
     # Attach observers
     forward_dropdown.observe(on_forward_change, names='value')
