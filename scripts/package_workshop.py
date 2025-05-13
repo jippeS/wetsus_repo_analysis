@@ -186,16 +186,16 @@ def primer_dropdown(dic_1, display, clear_output):
     reverse_dropdown = dic_1["reverse_dropdown"]
 
     def on_forward_change(change):
-        forward_output.clear_output()
         if change["new"] == "new_primer":
             with forward_output:
-                display(forward_name_input, forward_seq_input)
+                clear_output()
+            display(forward_name_input, forward_seq_input)
 
     def on_reverse_change(change):
-        reverse_output.clear_output()
         if change["new"] == "new_primer":
             with reverse_output:
-                display(reverse_name_input, reverse_seq_input)
+                clear_output()
+            display(reverse_name_input, reverse_seq_input)
 
     # Attach observers
     forward_dropdown.observe(on_forward_change, names='value')
