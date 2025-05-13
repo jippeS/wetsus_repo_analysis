@@ -256,3 +256,30 @@ def finalize_primers(dic_primer_output):
     print(f"Chosen reverse primer: {reverse_primer}: {reverse_primer_seq}")
 
     return forward_primer_seq, reverse_primer_seq
+
+
+def qiime_path_1(folder_path, metadata, name_convention_PairEndSequences, name_convention, outputdir):
+
+    metadata1 = f"{folder_path}/input/{metadata}"
+    input_file = f"{outputdir}/{name_convention_PairEndSequences}"
+    demux = f"{outputdir}/{name_convention}_demux.qza"
+    untrimmed = f"{outputdir}/{name_convention}_untrimmed.qza"
+    return metadata1, input_file, demux, untrimmed
+
+
+def qiime_path_2(outputdir, name_convention):
+    output_trimmed = f"{outputdir}/{name_convention}_trimmed_demux_seqs.qza"
+    representative = f"{outputdir}/{name_convention}_representative_sequences.qza"
+    table = f"{outputdir}/{name_convention}_table.qza"
+    denoising_stats = f"{outputdir}/{name_convention}_denoising_stats.qza"
+    output_repr_table = f"{outputdir}/dna-sequences.fasta"
+    output_repr_table_name = f"{outputdir}/{name_convention}_dna-sequences.fasta"
+    return output_trimmed, representative, table, denoising_stats, output_repr_table, output_repr_table_name
+
+
+def qiime_path_3(outputdir, name_convention):
+    mafft_output = f"{outputdir}/{name_convention}_aligned-rep-seqs.qza"
+    masked_output = f"{outputdir}/{name_convention}_masked_aligned-rep-seqs.qza"
+    unrooted_tree_output = f"{outputdir}/{name_convention}_unrooted-tree.qza"
+    rooted_tree = f"{outputdir}/{name_convention}_rooted-tree.qza"
+    return mafft_output, masked_output, unrooted_tree_output, rooted_tree
