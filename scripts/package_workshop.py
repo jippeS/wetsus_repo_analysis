@@ -283,3 +283,11 @@ def qiime_path_3(outputdir, name_convention):
     unrooted_tree_output = f"{outputdir}/{name_convention}_unrooted-tree.qza"
     rooted_tree = f"{outputdir}/{name_convention}_rooted-tree.qza"
     return mafft_output, masked_output, unrooted_tree_output, rooted_tree
+
+def qiime_arguments():
+    error_rate = 0
+    p_trim_left = 5
+    p_trim_right = 5
+    p_trunc_len_f = 200
+    p_trunc_len_r = 190
+    return error_rate, p_trim_left, p_trim_right, p_trunc_len_f, p_trunc_len_r
