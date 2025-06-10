@@ -71,9 +71,7 @@ def upload_files(files, shutil, folder_path):
 
 def naming_convention(folder_path, widgets):
     outputdir = folder_path + "/output"
-
-    num_cores = os.cpu_count()
-    cores =  int(os.cpu_count())
+    cores = 2
 
     # Create an "input bar" at the top
     input_box = widgets.Text(
@@ -97,7 +95,6 @@ def naming_convention(folder_path, widgets):
     # Display it nicely at the top
     display(input_box, output_box)
 
-    print(f"Number of CPU cores: {num_cores}")
     return input_box, cores, outputdir
 
 def create_names(input_box):
@@ -294,3 +291,9 @@ def qiime_arguments():
     p_trunc_len_f = 200
     p_trunc_len_r = 190
     return error_rate, p_trim_left, p_trim_right, p_trunc_len_f, p_trunc_len_r
+
+def get_cores():
+    num_cores = os.cpu_count()
+    cores =  int(os.cpu_count())
+    print(f"Number of CPU cores: {num_cores}")
+    return cores
