@@ -12,7 +12,7 @@ def check(pathway):
 
 
 def create_main_folder(widgets, clear_output, display):
-    root_folder = "drive/MyDrive/Wetsus_data_analysis"
+    root_folder = "drive/MyDrive/H2Omics_data_analysis"
     check(root_folder)
 
     # Create dropdown + dynamic text input
@@ -58,7 +58,7 @@ def chosen_folder(dropdown_widget, text_box_widget):
     else:
         chosen_item = dropdown_widget.value
     # Stuff for multiple places
-    folder_path = f"drive/MyDrive/Wetsus_data_analysis/{chosen_item}/qiime_analysis"
+    folder_path = f"drive/MyDrive/H2Omics_data_analysis/{chosen_item}/qiime_analysis"
     check(folder_path)
     return folder_path
 
@@ -71,7 +71,9 @@ def upload_files(files, shutil, folder_path):
 
 def naming_convention(folder_path, widgets):
     outputdir = folder_path + "/output"
-    cores = 2
+
+    num_cores = os.cpu_count()
+    cores =  int(os.cpu_count())
 
     # Create an "input bar" at the top
     input_box = widgets.Text(
@@ -95,6 +97,7 @@ def naming_convention(folder_path, widgets):
     # Display it nicely at the top
     display(input_box, output_box)
 
+    print(f"Number of CPU cores: {num_cores}")
     return input_box, cores, outputdir
 
 def create_names(input_box):
